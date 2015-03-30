@@ -1,4 +1,4 @@
-# pg_IdFromDate: Developer tools
+# pg_IdFromDate(): Developer tools
 
 pg_IdFromDate uses a range of PostgreSQL methods written in PL/pgSQL which are dependencies to to main function pg_IdFromDate().
 
@@ -26,10 +26,11 @@ gab@gab # SELECT MAX_ID('test');
 (1 row)
 ```
 
-### EPOCH_FROM_ID('table_name', 'date_column_name', 'selected_id', '(operator)')
+### EPOCH_FROM_ID('table_name', 'date_column_name', 'selected_id', '[operator]')
 
-EPOCH_FROM_ID('table_name', 'date_column_name', 'selected_id', '(operator)') will return the date converted to an epoch of the column "date_column_name" of the row "selected_id" of the table "table_name".
-(operator) can be either "=" or ">=". pg_IdFromDate() will always all this function with the operator "=". However, if the searched ID is inexistant or the date is NULL, the function will be called again with the operator ">=" to find the closest ID.
+EPOCH_FROM_ID('table_name', 'date_column_name', 'selected_id', '[operator]') will return the date converted to an epoch of the column "date_column_name" of the row "selected_id" of the table "table_name".
+
+[operator] can be either "=" or ">=". pg_IdFromDate() will always all this function with the operator "=". However, if the searched ID is inexistant or the date is NULL, the function will be called again with the operator ">=" to find the closest ID.
 ```sql
 gab@gab # SELECT EPOCH_FROM_ID('test', 'date', 6614, '=');
  epoch_from_id 

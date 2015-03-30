@@ -1,5 +1,4 @@
-pg_IdFromDate
-=============
+# pg_IdFromDate()
 
 pg_IdFromDate is a set of PostgreSQL functions that you can install on any PostgreSQL databases.
 
