@@ -1,4 +1,4 @@
-# pg_IdFromDate(): Example
+# pg_IdFromDate(): sample table
 
 ### Create a sample table
 

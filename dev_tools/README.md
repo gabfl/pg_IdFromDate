@@ -1,6 +1,6 @@
 # pg_IdFromDate(): Developer tools
 
-pg_IdFromDate uses a range of PostgreSQL methods written in PL/pgSQL which are dependencies to to main function pg_IdFromDate().
+pg_IdFromDate uses a range of PostgreSQL methods written in PL/pgSQL which are dependencies to the main function pg_IdFromDate().
 
 This page Readme is dedicated to developers who want to get a better understanding of pg_IdFromDate() dependencies functions.
 
@@ -30,7 +30,7 @@ gab@gab # SELECT MAX_ID('test');
 
 EPOCH_FROM_ID('table_name', 'date_column_name', 'selected_id', '[operator]') will return the date converted to an epoch of the column "date_column_name" of the row "selected_id" of the table "table_name".
 
-[operator] can be either "=" or ">=". pg_IdFromDate() will always all this function with the operator "=". However, if the searched ID is inexistant or the date is NULL, the function will be called again with the operator ">=" to find the closest ID.
+[operator] can be either "=" or ">=". pg_IdFromDate() will always call this function with the operator "=". However, if the searched ID is inexistant or the date is NULL, the function will be called again with the operator ">=" to find the closest valid ID.
 ```sql
 gab@gab # SELECT EPOCH_FROM_ID('test', 'date', 6614, '=');
  epoch_from_id 
@@ -51,22 +51,19 @@ gab@gab # SELECT EPOCH_FROM_ID('test', 'date', 6114, '>=');
 (1 row)
 ```
 
-### DATA_RANGES('table_name')
+### DATA_RANGES('table_name', 'cutter')
 
-DATA_RANGES('table_name') will suggest a range of ID to test in a loop method to find the closest ID from the date needed. It could be described as a brute forcing attack of the table.
+DATA_RANGES('table_name', 'cutter') will suggest a range of ID to test in a loop method to find the closest ID from the date needed. It could be described as a brute force attack on the table.
 ```sql
-gab@gab # SELECT DATA_RANGES('test');
+gab@gab # SELECT DATA_RANGES('test', 4);
  data_ranges 
 -------------
-       13155
-       11859
-       11202
-       10545
-        9888
-        9231
-        8574
-        7917
-        7260
-        6603
-(10 rows)
+        3288
+         822
+         205
+          51
+          12
+           3
+           1
+(7 rows)
 ```

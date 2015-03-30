@@ -2,17 +2,17 @@
 
 pg_IdFromDate is a set of PostgreSQL functions that you can install on any PostgreSQL databases.
 
-The objective is to be able to efficiently an ID corresponding to a row with a date; even on very big data tables.
+The objective is to be able to efficiently find an ID corresponding to a row with a date; even on very big data tables.
 
 ### Installation
 
-* Install all methods from sql/sql_fonctions.php
-* If you want to use a sample data set, create the table in sample_table/sample_tablesample_table.sql
-* Try it yourself with the examples bellow
+* Install all methods from sql/sql_functions.php
+* If you want to use a sample data set, create the table in sample_table/sample_table.sql
+* Try it yourself with the examples below
 
 ### Use pg_IdFromDate()
 
-pg_IdFromDate() requiers 3 inputs: the table name, the name of the date column and the timestamp to search.
+pg_IdFromDate() requires 3 inputs: the table name, the name of the date column and the timestamp to search.
 
 For example, if you have the following table:
 ```sql
@@ -56,4 +56,11 @@ Time: 12.116 ms
 ### Limitations
 
 * This tool is experimental and there is no guaranteed correct outcome
-* If "id" and the "date" column are not strictly in the same chronological order, the output might be an invalid ID (for example if a date is modified and his not above and bellow the dates of the preceding and following rows.)
+* If "id" and the "date" column are not strictly in the same chronological order, the output might be an invalid ID (for example if a date is modified and is not above and below the dates of the preceding and following rows.)
+
+### Author
+
+Gabriel Bordeaux
+
++ [Website](http://www.gab.lc/) 
++ [Twitter](https://twitter.com/gabrielbordeaux)
