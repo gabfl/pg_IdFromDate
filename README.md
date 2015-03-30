@@ -36,7 +36,6 @@ gab@gab # SELECT pg_IdFromDate('test', 'date', '2014-08-09 16:53:00');
 ---------------
           7606
 (1 row)
-
 Time: 9.270 ms
 
 gab@gab # SELECT pg_IdFromDate('test', 'date', '2014-08-09');
@@ -53,10 +52,23 @@ gab@gab # SELECT pg_IdFromDate('test', 'date', (NOW() - interval '1 week')::time
 Time: 12.116 ms
 ```
 
+You can also use the result as a subquery in other queries, for example:
+```sql
+-- To select all rows where the date is > 2014-08-09
+SELECT * FROM test WHERE id > (SELECT pg_IdFromDate('test', 'date', '2014-08-09'));
+
+-- Select all rows where dates are between 2014-08-09 and 2014-10-01
+SELECT * FROM test WHERE id > (SELECT pg_IdFromDate('test', 'date', '2014-08-09')) AND id < (SELECT pg_IdFromDate('test', 'date', '2014-10-01'));
+
+-- Delete all rows where the date is < 2014-08-09
+DELETE FROM test WHERE id < (SELECT pg_IdFromDate('test', 'date', '2014-08-09'));
+```
+
 ### Limitations
 
 * This tool is experimental and there is no guaranteed correct outcome
 * If "id" and the "date" column are not strictly in the same chronological order, the output might be an invalid ID (for example if a date is modified and is not above and below the dates of the preceding and following rows.)
+* The "id" needs to be called "id" and be a unique primary key of the table.
 
 ### Author
 
