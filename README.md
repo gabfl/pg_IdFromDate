@@ -6,8 +6,8 @@ The objective is to be able to efficiently find an ID corresponding to a row wit
 
 ### Installation
 
-* Install all methods from sql/sql_functions.php
-* If you want to use a sample data set, create the table in sample_table/sample_table.sql
+* Install all methods from [sql/sql_functions.php](sql/sql_functions.php)
+* If you want to use a sample data set, create the table in [sample_table/sample_table.sql](sample_table/sample_table.sql)
 * Try it yourself with the examples below
 
 ### Use pg_IdFromDate()
