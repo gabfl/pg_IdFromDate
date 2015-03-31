@@ -6,8 +6,8 @@ The objective is to be able to efficiently find an ID corresponding to a row wit
 
 ### Installation
 
-* Install all methods from sql/sql_functions.php
-* If you want to use a sample data set, create the table in sample_table/sample_table.sql
+* Install all methods from [sql/sql_functions.php](sql/sql_functions.php)
+* If you want to use a sample data set, create the table in [sample_table/sample_table.sql](sample_table/sample_table.sql)
 * Try it yourself with the examples below
 
 ### Use pg_IdFromDate()
@@ -16,7 +16,7 @@ pg_IdFromDate() requires 3 inputs: the table name, the name of the date column a
 
 For example, if you have the following table:
 ```sql
-[perso] gab@gab # SELECT * FROM test LIMIT 5 OFFSET 1000;
+gab@gab # SELECT * FROM test LIMIT 5 OFFSET 1000;
   id  |            date            |            some_data             
 ------+----------------------------+----------------------------------
  7603 | 2014-08-09 13:53:00.786386 | 97d7d73b7495a1d81f002e787462da97
@@ -63,6 +63,19 @@ SELECT * FROM test WHERE id > (SELECT pg_IdFromDate('test', 'date', '2014-08-09'
 -- Delete all rows where the date is < 2014-08-09
 DELETE FROM test WHERE id < (SELECT pg_IdFromDate('test', 'date', '2014-08-09'));
 ```
+
+### Benchmark
+
+Method                            | "...WHERE date = '[DATE]';" | pg_IdFromDate() | Result                        
+----------------------------------|-----------------------------|-----------------|--------------------------------
+Querying a timestamp (no index)   | 2264.763 ms                 | 16.351 ms       | pg_IdFromDate() is 141x faster
+Querying a date (no index)        | 3252.576 ms                 | 17.084 ms       | pg_IdFromDate() is 191x faster
+Querying a timestamp (+ index)    | 3.582 ms                    | 23.507 ms       | pg_IdFromDate() is 6x slower
+Querying a date (+ index)         | 3303.716                    | 24.398          | pg_IdFromDate() is 137x faster
+
+We searched the same timestamp / dates on the same medium sized table (> 10 million rows).
+
+More informations and a list of queries are available on our [Benchmark readme](benchmark/README.md)
 
 ### Limitations
 
