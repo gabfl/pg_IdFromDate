@@ -64,28 +64,26 @@ SELECT * FROM test WHERE id > (SELECT pg_IdFromDate('test', 'date', '2014-08-09'
 DELETE FROM test WHERE id < (SELECT pg_IdFromDate('test', 'date', '2014-08-09'));
 ```
 
-### Benchmark
+### Benchmark on a table > 100 million rows
 
 Method                            | "...WHERE date = '[DATE]';" | pg_IdFromDate() | Result                        
 ----------------------------------|-----------------------------|-----------------|--------------------------------
-Querying a timestamp (no index)   | 2264.763 ms                 | 16.351 ms       | pg_IdFromDate() is 141x faster
-Querying a date (no index)        | 3252.576 ms                 | 17.084 ms       | pg_IdFromDate() is 191x faster
-Querying a timestamp (+ index)    | 3.582 ms                    | 23.507 ms       | pg_IdFromDate() is 6x slower
-Querying a date (+ index)         | 3303.716                    | 24.398          | pg_IdFromDate() is 137x faster
+Querying a timestamp (no index)   | 25,225.50 ms                | 11.08 ms        | pg_IdFromDate() is **2,276x faster**
+Querying a date (no index)        | 41,174.18 ms                | 10.74 ms        | pg_IdFromDate() is **3,833x faster**
+Querying a timestamp (+ index)    | 12.44 ms                    | 10.22 ms        | pg_IdFromDate() is 2 ms slower
+Querying a date (+ index)         | 43,361.46 ms                | 11.05 ms        | pg_IdFromDate() is **3,924x faster**
 
-We searched the same timestamp / dates on the same medium sized table (> 10 million rows).
-
-More informations and a list of queries are available on our [Benchmark readme](benchmark/README.md)
+Two detailed benchmarks (tables > 10 and > 100 million rows) with a detailed list of queries are available on our [Benchmark readme](benchmark/README.md).
 
 ### Limitations
 
 * This tool is experimental and there is no guaranteed correct outcome
-* If "id" and the "date" column are not strictly in the same chronological order, the output might be an invalid ID (for example if a date is modified and is not above and below the dates of the preceding and following rows.)
+* If "id" and the "date" column are not strictly in the same chronological order, the output might be an invalid ID (for example if a date is modified and is not above and below the dates of the preceding and following rows).
 * The "id" needs to be called "id" and be a unique primary key of the table.
 
 ### Author
 
-Gabriel Bordeaux
+**Gabriel Bordeaux**
 
 + [Website](http://www.gab.lc/) 
 + [Twitter](https://twitter.com/gabrielbordeaux)
