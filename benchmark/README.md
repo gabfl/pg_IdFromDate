@@ -8,10 +8,10 @@ We searched the same timestamp / dates on the same medium sized table (> 10 mill
 
 Method                            | "...WHERE date = '[DATE]';" | pg_IdFromDate() | Result                        
 ----------------------------------|-----------------------------|-----------------|--------------------------------
-Querying a timestamp (no index)   | 2,264.76 ms                 | 10.04 ms        | pg_IdFromDate() is **225x faster**
-Querying a date (no index)        | 3,252.57 ms                 | 10.10 ms        | pg_IdFromDate() is **322x faster**
-Querying a timestamp (+ index)    | 3.58 ms                     | 10.97 ms        | pg_IdFromDate() is 3x slower
-Querying a date (+ index)         | 3,303.71 ms                 | 10.54 ms        | pg_IdFromDate() is **313x faster**
+Querying a timestamp (no index)   | 2,264.76 ms                 | 6.53 ms         | pg_IdFromDate() is **346x faster**
+Querying a date (no index)        | 3,252.57 ms                 | 6.82 ms         | pg_IdFromDate() is **477x faster**
+Querying a timestamp (+ index)    | 3.58 ms                     | 5.84 ms         | pg_IdFromDate() is 2 ms slower
+Querying a date (+ index)         | 3,303.71 ms                 | 5.91 ms         | pg_IdFromDate() is **559x faster**
 
 ### Querying a timestamp
 
@@ -27,9 +27,9 @@ Time: 2264.763 ms
 gab@benchmark # SELECT * FROM test WHERE id = (SELECT pg_IdFromDate('test', 'date', '2012-05-09 08:37:21'));
    id    |        date         |            some_data             
 ---------+---------------------+----------------------------------
- 9000008 | 2012-05-09 08:37:21 | 80e27e440ff8d570b9a6bbaa72fe6733
+ 8995608 | 2012-05-09 08:37:02 | 5b4d648e6bc878c006391972b1f50da3
 (1 row)
-Time: 10.044 ms
+Time: 6.536 ms
 
 -- Creating an index
 gab@benchmark # CREATE INDEX ON test (date);
@@ -47,9 +47,9 @@ Time: 3.582 ms
 gab@benchmark # SELECT * FROM test WHERE id = (SELECT pg_IdFromDate('test', 'date', '2012-05-09 08:37:21'));
    id    |        date         |            some_data             
 ---------+---------------------+----------------------------------
- 9000008 | 2012-05-09 08:37:21 | 80e27e440ff8d570b9a6bbaa72fe6733
+ 8995608 | 2012-05-09 08:37:02 | 5b4d648e6bc878c006391972b1f50da3
 (1 row)
-Time: 10.104 ms
+Time: 5.847 ms
 ```
 
 #### Querying a date
@@ -66,9 +66,9 @@ Time: 3252.576 ms
 gab@benchmark # SELECT * FROM test WHERE id = (SELECT pg_IdFromDate('test', 'date', '2011-05-08'::date));
    id    |        date         |            some_data             
 ---------+---------------------+----------------------------------
- 8471011 | 2011-05-08 00:00:21 | 1954adfd4f5067b11d2ef096d8e98212
+ 8466611 | 2011-05-08 00:00:02 | 75bf3e08491339a455f397d3923c51c1
 (1 row)
-Time: 10.976 ms
+Time: 6.823 ms
 
 -- Creating an index
 gab@benchmark # CREATE INDEX ON test (date);
@@ -86,9 +86,9 @@ Time: 3303.716 ms
 gab@benchmark # SELECT * FROM test WHERE id = (SELECT pg_IdFromDate('test', 'date', '2011-05-08'::date));
    id    |        date         |            some_data             
 ---------+---------------------+----------------------------------
- 8471011 | 2011-05-08 00:00:21 | 1954adfd4f5067b11d2ef096d8e98212
+ 8466611 | 2011-05-08 00:00:02 | 75bf3e08491339a455f397d3923c51c1
 (1 row)
-Time: 10.542 ms
+Time: 5.911 ms
 ```
 
 ## Benchmark with a table > 100 million rows
@@ -97,10 +97,10 @@ Time: 10.542 ms
 
 Method                            | "...WHERE date = '[DATE]';" | pg_IdFromDate() | Result                        
 ----------------------------------|-----------------------------|-----------------|--------------------------------
-Querying a timestamp (no index)   | 25,225.50 ms                | 11.08 ms        | pg_IdFromDate() is **2,276x faster**
-Querying a date (no index)        | 41,174.18 ms                | 10.74 ms        | pg_IdFromDate() is **3,833x faster**
-Querying a timestamp (+ index)    | 12.44 ms                    | 10.22 ms        | pg_IdFromDate() is 2 ms slower
-Querying a date (+ index)         | 43,361.46 ms                | 11.05 ms        | pg_IdFromDate() is **3,924x faster**
+Querying a timestamp (no index)   | 25,225.50 ms                | 7.07 ms         | pg_IdFromDate() is **3,568x faster**
+Querying a date (no index)        | 41,174.18 ms                | 6.56 ms         | pg_IdFromDate() is **6,276x faster**
+Querying a timestamp (+ index)    | 12.44 ms                    | 7.11 ms         | pg_IdFromDate() is **2x faster**
+Querying a date (+ index)         | 43,361.46 ms                | 7.27 ms         | pg_IdFromDate() is **5,964x faster**
 
 ### Querying a timestamp
 
@@ -116,9 +116,9 @@ Time: 25225.509 ms
 gab@benchmark # SELECT * FROM test2 WHERE id = (SELECT pg_IdFromDate('test2', 'date', '2014-03-09 02:46:43'));
     id    |        date         |            some_data             
 ----------+---------------------+----------------------------------
- 99455363 | 2014-03-09 02:46:43 | 1fd9ee3f10aefc095c431c5053bd21f6
+ 99454201 | 2014-03-09 02:46:44 | a996eecc7b6f3b693595a5ed22126360
 (1 row)
-Time: 11.087 ms
+Time: 7.072 ms
 
 -- Creating an index
 gab@benchmark # CREATE INDEX ON test2 (date);
@@ -136,9 +136,9 @@ Time: 12.447 ms
 gab@benchmark # SELECT * FROM test2 WHERE id = (SELECT pg_IdFromDate('test2', 'date', '2014-03-09 02:46:43'));
     id    |        date         |            some_data             
 ----------+---------------------+----------------------------------
- 99455363 | 2014-03-09 02:46:43 | 1fd9ee3f10aefc095c431c5053bd21f6
+ 99454201 | 2014-03-09 02:46:44 | a996eecc7b6f3b693595a5ed22126360
 (1 row)
-Time: 10.226 ms
+Time: 7.110 ms
 ```
 
 #### Querying a date
@@ -155,9 +155,9 @@ Time: 41174.185 ms
 gab@benchmark # SELECT * FROM test2 WHERE id = (SELECT pg_IdFromDate('test2', 'date', '2014-03-09'::date));
     id    |        date         |            some_data             
 ----------+---------------------+----------------------------------
- 99455197 | 2014-03-09 00:00:43 | e394f1bf971bf54476f0fe956e847cab
+ 99454034 | 2014-03-08 23:59:44 | e9ced33e5c31c96642f18937659c2b70
 (1 row)
-Time: 10.745 ms
+Time: 6.568 ms
 
 -- Creating an index
 gab@benchmark # CREATE INDEX ON test2 (date);
@@ -175,7 +175,7 @@ Time: 43361.469 ms
 gab@benchmark # SELECT * FROM test2 WHERE id = (SELECT pg_IdFromDate('test2', 'date', '2014-03-09'::date));
     id    |        date         |            some_data             
 ----------+---------------------+----------------------------------
- 99455197 | 2014-03-09 00:00:43 | e394f1bf971bf54476f0fe956e847cab
+ 99454034 | 2014-03-08 23:59:44 | e9ced33e5c31c96642f18937659c2b70
 (1 row)
-Time: 11.050 ms
+Time: 7.272 ms
 ```
