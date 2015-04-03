@@ -17,14 +17,14 @@ Querying a date (+ index)         | 3,303.71 ms                 | 5.91 ms       
 
 ```sql
 -- Tests without an index
-gab@benchmark # SELECT * FROM test WHERE date = '2012-05-09 08:37:21';
+gab@benchmark # SELECT * FROM test WHERE date = '2012-05-09 08:37:02';
    id    |        date         |            some_data             
 ---------+---------------------+----------------------------------
- 9000008 | 2012-05-09 08:37:21 | 80e27e440ff8d570b9a6bbaa72fe6733
+ 8995608 | 2012-05-09 08:37:02 | 5b4d648e6bc878c006391972b1f50da3
 (1 row)
 Time: 2264.763 ms
 
-gab@benchmark # SELECT * FROM test WHERE id = (SELECT pg_IdFromDate('test', 'date', '2012-05-09 08:37:21'));
+gab@benchmark # SELECT * FROM test WHERE id = (SELECT pg_IdFromDate('test', 'date', '2012-05-09 08:37:02'));
    id    |        date         |            some_data             
 ---------+---------------------+----------------------------------
  8995608 | 2012-05-09 08:37:02 | 5b4d648e6bc878c006391972b1f50da3
@@ -37,14 +37,14 @@ CREATE INDEX
 Time: 24581.615 ms
 
 -- Tests with an index
-gab@benchmark # SELECT * FROM test WHERE date = '2012-05-09 08:37:21';
+gab@benchmark # SELECT * FROM test WHERE date = '2012-05-09 08:37:02';
    id    |        date         |            some_data             
 ---------+---------------------+----------------------------------
- 9000008 | 2012-05-09 08:37:21 | 80e27e440ff8d570b9a6bbaa72fe6733
+ 8995608 | 2012-05-09 08:37:02 | 5b4d648e6bc878c006391972b1f50da3
 (1 row)
 Time: 3.582 ms
 
-gab@benchmark # SELECT * FROM test WHERE id = (SELECT pg_IdFromDate('test', 'date', '2012-05-09 08:37:21'));
+gab@benchmark # SELECT * FROM test WHERE id = (SELECT pg_IdFromDate('test', 'date', '2012-05-09 08:37:02'));
    id    |        date         |            some_data             
 ---------+---------------------+----------------------------------
  8995608 | 2012-05-09 08:37:02 | 5b4d648e6bc878c006391972b1f50da3
@@ -59,7 +59,7 @@ Time: 5.847 ms
 gab@benchmark # SELECT * FROM test WHERE date::date = '2011-05-08' LIMIT 1;
    id    |        date         |            some_data             
 ---------+---------------------+----------------------------------
- 8471011 | 2011-05-08 00:00:21 | 1954adfd4f5067b11d2ef096d8e98212
+ 8466611 | 2011-05-08 00:00:02 | 75bf3e08491339a455f397d3923c51c1
 (1 row)
 Time: 3252.576 ms
 
@@ -79,7 +79,7 @@ Time: 25555.699 ms
 gab@benchmark # SELECT * FROM test WHERE date::date = '2011-05-08' LIMIT 1;
    id    |        date         |            some_data             
 ---------+---------------------+----------------------------------
- 8471011 | 2011-05-08 00:00:21 | 1954adfd4f5067b11d2ef096d8e98212
+ 8466611 | 2011-05-08 00:00:02 | 75bf3e08491339a455f397d3923c51c1
 (1 row)
 Time: 3303.716 ms
 
@@ -106,14 +106,14 @@ Querying a date (+ index)         | 43,361.46 ms                | 7.27 ms       
 
 ```sql
 -- Tests without an index
-gab@benchmark # SELECT * FROM test2 WHERE date = '2014-03-09 02:46:43';
+gab@benchmark # SELECT * FROM test2 WHERE date = '2014-03-09 02:46:44';
     id    |        date         |            some_data             
 ----------+---------------------+----------------------------------
- 99455363 | 2014-03-09 02:46:43 | 1fd9ee3f10aefc095c431c5053bd21f6
+ 99454201 | 2014-03-09 02:46:44 | a996eecc7b6f3b693595a5ed22126360
 (1 row)
 Time: 25225.509 ms
 
-gab@benchmark # SELECT * FROM test2 WHERE id = (SELECT pg_IdFromDate('test2', 'date', '2014-03-09 02:46:43'));
+gab@benchmark # SELECT * FROM test2 WHERE id = (SELECT pg_IdFromDate('test2', 'date', '2014-03-09 02:46:44'));
     id    |        date         |            some_data             
 ----------+---------------------+----------------------------------
  99454201 | 2014-03-09 02:46:44 | a996eecc7b6f3b693595a5ed22126360
@@ -126,14 +126,14 @@ CREATE INDEX
 Time: 227698.756 ms
 
 -- Tests with an index
-gab@benchmark # SELECT * FROM test2 WHERE date = '2014-03-09 02:46:43';
+gab@benchmark # SELECT * FROM test2 WHERE date = '2014-03-09 02:46:44';
     id    |        date         |            some_data             
 ----------+---------------------+----------------------------------
- 99455363 | 2014-03-09 02:46:43 | 1fd9ee3f10aefc095c431c5053bd21f6
+ 99454201 | 2014-03-09 02:46:44 | a996eecc7b6f3b693595a5ed22126360
 (1 row)
 Time: 12.447 ms
 
-gab@benchmark # SELECT * FROM test2 WHERE id = (SELECT pg_IdFromDate('test2', 'date', '2014-03-09 02:46:43'));
+gab@benchmark # SELECT * FROM test2 WHERE id = (SELECT pg_IdFromDate('test2', 'date', '2014-03-09 02:46:44'));
     id    |        date         |            some_data             
 ----------+---------------------+----------------------------------
  99454201 | 2014-03-09 02:46:44 | a996eecc7b6f3b693595a5ed22126360
@@ -148,7 +148,7 @@ Time: 7.110 ms
 gab@benchmark # SELECT * FROM test2 WHERE date::date = '2014-03-09' LIMIT 1;
     id    |        date         |            some_data             
 ----------+---------------------+----------------------------------
- 99455197 | 2014-03-09 00:00:43 | e394f1bf971bf54476f0fe956e847cab
+ 99454035 | 2014-03-09 00:00:44 | 0481703a3ac9a1eb21d14b98afb35739
 (1 row)
 Time: 41174.185 ms
 
@@ -168,7 +168,7 @@ Time: 231331.880 ms
 gab@benchmark # SELECT * FROM test2 WHERE date::date = '2014-03-09' LIMIT 1;
     id    |        date         |            some_data             
 ----------+---------------------+----------------------------------
- 99455197 | 2014-03-09 00:00:43 | e394f1bf971bf54476f0fe956e847cab
+ 99454035 | 2014-03-09 00:00:44 | 0481703a3ac9a1eb21d14b98afb35739
 (1 row)
 Time: 43361.469 ms
 
