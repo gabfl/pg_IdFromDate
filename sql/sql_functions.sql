@@ -73,10 +73,10 @@ $$ LANGUAGE 'plpgsql';
 
 -- Input: table name (text)
 -- Output: Minimal ID in a table
-CREATE OR REPLACE FUNCTION pg_IFD_MIN_ID(text) RETURNS int AS $$
+CREATE OR REPLACE FUNCTION pg_IFD_MIN_ID(text) RETURNS bigint AS $$
 DECLARE
     table_name ALIAS FOR $1;
-    minid int;
+    minid bigint;
 BEGIN
    EXECUTE ' SELECT MIN(id) FROM ' || quote_ident(table_name)
    INTO minid;
@@ -88,10 +88,10 @@ $$ LANGUAGE plpgsql;
 
 -- Input: table name (text)
 -- Output: Maximal ID in a table
-CREATE OR REPLACE FUNCTION pg_IFD_MAX_ID(text) RETURNS int AS $$
+CREATE OR REPLACE FUNCTION pg_IFD_MAX_ID(text) RETURNS bigint AS $$
 DECLARE
     table_name ALIAS FOR $1;
-    maxid int;
+    maxid bigint;
 BEGIN
    EXECUTE ' SELECT MAX(id) FROM ' || quote_ident(table_name)
    INTO maxid;
